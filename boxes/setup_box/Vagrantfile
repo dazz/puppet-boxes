@@ -3,15 +3,22 @@
 
 Vagrant::Config.run do |config|
 
-  config.vm.box = "base"
-  # config.vm.box_url = "http://domain.com/path/to/above.box"
-  # config.vm.boot_mode = :gui
-  # config.vm.network :hostonly, "192.168.33.10"
-  # config.vm.forward_port 80, 8080
-  # config.vm.share_folder "v-data", "/vagrant_data", "../data"
-  #
-  config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "./"
-    puppet.manifest_file  = "manifest.pp"
+
+  config.vm.define :setup_box do |setup_box|
+    setup_box.vm.box = "setup_box"
+    # setup_box.vm.box_url = "http://domain.com/path/to/above.box"
+    # setup_box.vm.boot_mode = :gui
+    # setup_box.vm.network :hostonly, "192.168.33.10"
+    # setup_box.vm.forward_port 80, 8080
+    # setup_box.vm.share_folder "v-data", "/vagrant_data", "../data"
+    #
+    setup_box.vm.network :hostonly, "33.33.33.60"
+    setup_box.ssh.forward_agent = true
+    
+    setup_box.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "./"
+      puppet.manifest_file  = "manifest.pp"
+    end
   end
+  
 end
