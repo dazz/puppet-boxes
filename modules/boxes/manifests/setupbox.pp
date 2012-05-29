@@ -1,11 +1,11 @@
 class boxes::setupbox {
 
-    include php
+    # include php
 
-    include apache
-    include apache::php
+    # include apache
+    # include apache::php
 
-    include php::apache
+    # include php::apache
 
-    include mysql
+    # include mysql
 }
