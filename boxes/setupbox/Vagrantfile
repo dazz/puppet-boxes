@@ -12,7 +12,7 @@ Vagrant::Config.run do |config|
     # setupbox.vm.forward_port 80, 8080
     # setupbox.vm.share_folder "v-data", "/vagrant_data", "../data"
     #
-    setupbox.vm.network :hostonly, "33.33.33.60"
+    setupbox.vm.network :hostonly, "192.168.23.42", :auto_config => true, :adapter => 2
     setupbox.ssh.forward_agent = true
     
     setupbox.vm.provision :puppet do |puppet|
