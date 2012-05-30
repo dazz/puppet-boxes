@@ -101,14 +101,33 @@ Clone this project and edit to your likes:
 
 5. Setup the BASE BOX
 
- * Go with terminal into <project_dir>/boxes/basebox and run the command `vagrant up`
+ * Go with terminal into `<project_dir>/boxes/basebox` and run the command `vagrant up`
   * It will:
    * Run with included Vagrantfile,
+   * Download the box from the specified box_url and add it to vagrants boxes (see all with `vagrant box list`)
    * Run the provisioner Puppet startting with the manifest.pp in the same directory (this is how we do it for every box)
   * Vagrant will start a virtual machine in Virtualbox with
    * IP: 192.168.23.42
    * User: vagrant, password: vagrant
   * You can have a look with `vagrant ssh`(Linux and Mac) but don't touch anything yet, we are not finished :)
+
  * When the vagrant comes back with finished setting up the BASE BOX you stop the vm with 'vagrant halt'
- * Run `vagrant package basebox --output basebox.box` to export the vm as base box for the next iteration, the SETUP BOX
-  * It will package the vm as a box that we can reference in another Vagrantfile
+
+ * Run following to export the vm as base box for the next iteration, the SETUP BOX
+  * mkdir -R ~/Development/puppet_boxes
+  * `vagrant package basebox --output basebox.box` (add `*.box` to your .gitignore)
+   * It will package the vm as a box
+  * `vagrant box add basebox basebox.box`
+   * We add it to the other vagrant boxes so we can reference it as base in another Vagrantfile
+   * If you have a look in `~/.vagrant.d/boxes/` there should now be the basebox folder with your previous packed box
+
+6. Setup the SETUP BOX
+
+ * Do the same steps above but for the SETUP BOX:
+ * cd `<project_dir>/boxes/setupbox`
+ * `vagrant up`
+ * `vagrant halt`
+ * `vagrant package setupbox --output setupbox.box`
+ * `vagrant box add setupbox setupbox.box`
+
+Now we have the setupbox as base box for every iteration we want to do next:
