@@ -79,21 +79,21 @@ To work with this setup you do the following:
 *To clarify*: I will not explain vagrant much or puppet or git or how your host operating system works.
 I will however explain how this virtualization box model works.
 
-1.  Install [vagrant](vagrantup.com)
+	1. Install [vagrant](vagrantup.com)
 
- * Linux: `sudo apt-get install vagrant`
+	* Linux: `sudo apt-get install vagrant`
 
-2.  Install [Virtualbox](https://www.virtualbox.org)
+	2.  Install [Virtualbox](https://www.virtualbox.org)
 
- * Linux: `sudo apt-get install virtualbox`
+	* Linux: `sudo apt-get install virtualbox`
 
-3.  Clone $this project
+	3.  Clone $this project
 
 Clone this project and edit to your likes:
 
- * `git clone git@github.com:dazz/puppet-boxes.git`
- * `git submodule init` (to load all submodules from .gitmodules) and
- * `git submodule update` (to get the [submodules][4] code from github)
+	* `git clone git@github.com:dazz/puppet-boxes.git`
+	* `git submodule init` (to load all submodules from .gitmodules) and
+	* `git submodule update` (to get the [submodules][4] code from github)
 
 4. Versioning
 
