@@ -5,16 +5,28 @@ Vagrant::Config.run do |config|
 
 
   config.vm.define :basebox do |basebox|
-    basebox.vm.box = "basebox"
+
+    # base_box of our BASE BOX
+    basebox.vm.box = "debian_squeeze_32"
+
+    # you can set your own url here, but make sure that you do not maintain this box to stay
+    # clear of your project scope. it ends here.
     basebox.vm.box_url = "http://mathie-vagrant-boxes.s3.amazonaws.com/debian_squeeze_32.box"
+
+    # left it here for dev purpose, don't need it really
     basebox.vm.boot_mode = :gui
-    # basebox.vm.network :hostonly, "192.168.33.10"
+
     # basebox.vm.forward_port 80, 8080
     # basebox.vm.share_folder "v-data", "/vagrant_data", "../data"
-    #
+
+    # as you don't start this vm at the same time as the successor it is ok to have
+    # the same ip for every Vagrantfile
     basebox.vm.network :hostonly, "192.168.23.42", :auto_config => true, :adapter => 2
+
+    # we want to run git in the vm
     basebox.ssh.forward_agent = true
-    
+
+    # the manifest.pp is in the same directory as the Vagrantfile
     basebox.vm.provision :puppet do |puppet|
       puppet.manifests_path = "./"
       puppet.manifest_file  = "manifest.pp"
@@ -22,6 +34,8 @@ Vagrant::Config.run do |config|
       puppet.options = "--verbose --debug"
     end
   end
+
+# copy aaaaall the values I could set
 
   #    config.nfs.map_uid
   #    config.nfs.map_gid
