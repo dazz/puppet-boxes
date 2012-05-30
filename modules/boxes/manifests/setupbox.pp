@@ -1,13 +1,20 @@
 class boxes::setupbox {
 
-    notice("boxes::setupbox install php")
-    # include php
+    notice("boxes::setupbox install php and apache2")
+    include php::apache2
 
-    # include apache
-    # include apache::php
+#    php::module { [ 'suhosin', ]:
+#        require => Apt::Sources_list['dotdeb-php53'],
+#        notify  => Service[$php::params::apache_service_name],
+#        source  => true,
+#    }
 
-    notice("boxes::setupbox install php::apache")
-    # include php::apache
+    package{"php5-intl":
+        require => Class['php::install'],
+        notify  => Service[$php::params::apache_service_name]
+    }
 
-    # include mysql
+    notice("boxes::setupbox install mysql")
+    include mysql
+
 }
