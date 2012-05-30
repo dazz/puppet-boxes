@@ -4,13 +4,16 @@ puppet-boxes
 Puppet and Vagrant Boxes building a development, testing and staging flow
 
 The application development workflow will be supported by a setup of virtual 
-machines "boxes". Each box will have its purpose and its predecessor in order to develop easily
-for the webstack.
+machines "boxes". Each box will have its purpose and its predecessor in order to develop easily and fast
+for and in the web-stack (means web-applications, web- and mvc-frameworks, interfaces).
 
 [BASE BOX]
 --------
-The base box will download the first base_box from puppetlabs or your chosen url.
+The base box will download the first base box from puppetlabs or your chosen url.
 Everything that needs to be prepared before all the software will be setup will happen in this step.
+
+You can set your own url here with `basebox.vm.box_url`, but make sure that you do not maintain this
+box to stay clear of your project scope. it ends here.
 
 [SETUP BOX]
 --------
@@ -76,16 +79,23 @@ To work with this setup you do the following:
 *To clarify*: I will not explain vagrant much or puppet or git or how your host operating system works.
 I will however explain how this virtualization box model works.
 
-1. install [vagrant](vagrantup.com)
+1. Install [vagrant](vagrantup.com)
 
  * Linux: `sudo apt-get install vagrant`
-2. install [Virtualbox](https://www.virtualbox.org)
+
+2. Install [Virtualbox](https://www.virtualbox.org)
+
  * Linux: `sudo apt-get install virtualbox`
 
-3. clone this project and edit to your likes
+3. Clone $this project
+
+Clone this project and edit to your likes:
+
  * `git clone git@github.com:dazz/puppet-boxes.git`
 
-4. install [git-flow (git branching model)](http://nvie.com/posts/a-successful-git-branching-model/)
+4. Versioning
+
+ * install [git-flow (git branching model)](http://nvie.com/posts/a-successful-git-branching-model/)
  * [initialize](http://yakiloo.com/getting-started-git-flow/)
  * create a new feature/<branch_name> to start customizing to your likes to make a pull request later
 
