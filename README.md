@@ -145,7 +145,7 @@ How many iterations you will need to have a production close environment to deve
 depends on your usecase or the company you work for.
 
 
-[1](http://askubuntu.com/questions/9375/new-mac-address-now-i-have-no-network-access) Can be fixed with static mac-address
-[2](http://www.artwork.com/support/linux/eth0_configuration.htm)
-[3](http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=1032790)
-[4](http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/)
+[1]: http://askubuntu.com/questions/9375/new-mac-address-now-i-have-no-network-access Can be fixed with static mac-address
+[2]: http://www.artwork.com/support/linux/eth0_configuration.htm
+[3]: http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=1032790
+[4]: http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
