@@ -92,6 +92,8 @@ I will however explain how this virtualization box model works.
 Clone this project and edit to your likes:
 
  * `git clone git@github.com:dazz/puppet-boxes.git`
+ * `git submodule init` (to load all submodules from .gitmodules) and
+ * `git submodule update` (to get the [submodules][4] code from github)
 
 4. Versioning
 
@@ -126,6 +128,8 @@ Clone this project and edit to your likes:
  * Do the same steps above but for the SETUP BOX:
  * cd `<project_dir>/boxes/setupbox`
  * `vagrant up` (Vagrant import the basebox we previously added)
+ * if you don't see your machine with 192.168.23.24 you manually have to delete following:
+    `sudo rm /etc/udev/rules.d/70-persistent-net.rules` and then run `vagrant up` again [source][1][2][3]
  * `vagrant halt`
  * `vagrant package setupbox --output setupbox.box`
  * `vagrant box add setupbox setupbox.box`
@@ -141,3 +145,7 @@ How many iterations you will need to have a production close environment to deve
 depends on your usecase or the company you work for.
 
 
+[1](http://askubuntu.com/questions/9375/new-mac-address-now-i-have-no-network-access) Can be fixed with static mac-address
+[2](http://www.artwork.com/support/linux/eth0_configuration.htm)
+[3](http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=1032790)
+[4](http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/)
