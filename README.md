@@ -131,3 +131,13 @@ Clone this project and edit to your likes:
  * `vagrant box add setupbox setupbox.box`
 
 Now we have the setupbox as base box for every iteration we want to do next:
+
+ * PRODUCTION BOX
+ * STAGE BOX and finally the
+ * DEVELOPER BOX
+
+In the first two stages we won't do anything by hand, but let machines to the work.
+How many iterations you will need to have a production close environment to develop in
+depends on your usecase or the company you work for.
+
+
