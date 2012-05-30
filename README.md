@@ -79,15 +79,15 @@ To work with this setup you do the following:
 *To clarify*: I will not explain vagrant much or puppet or git or how your host operating system works.
 I will however explain how this virtualization box model works.
 
-1. Install [vagrant](vagrantup.com)
+1.  Install [vagrant](vagrantup.com)
 
  * Linux: `sudo apt-get install vagrant`
 
-2. Install [Virtualbox](https://www.virtualbox.org)
+2.  Install [Virtualbox](https://www.virtualbox.org)
 
  * Linux: `sudo apt-get install virtualbox`
 
-3. Clone $this project
+3.  Clone $this project
 
 Clone this project and edit to your likes:
 
@@ -129,7 +129,7 @@ Clone this project and edit to your likes:
  * cd `<project_dir>/boxes/setupbox`
  * `vagrant up` (Vagrant import the basebox we previously added)
  * if you don't see your machine with 192.168.23.24 you manually have to delete following:
-    `sudo rm /etc/udev/rules.d/70-persistent-net.rules` and then run `vagrant up` again [source][1][2][3]
+    `sudo rm /etc/udev/rules.d/70-persistent-net.rules` and then run `vagrant up` again [sources][1] [2][2][3][3]
  * `vagrant halt`
  * `vagrant package setupbox --output setupbox.box`
  * `vagrant box add setupbox setupbox.box`
