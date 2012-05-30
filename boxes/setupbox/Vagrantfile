@@ -3,7 +3,6 @@
 
 Vagrant::Config.run do |config|
 
-
   config.vm.define :setupbox do |setupbox|
 
     # on which base box this box will be setup from
