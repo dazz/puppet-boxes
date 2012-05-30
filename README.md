@@ -125,7 +125,7 @@ Clone this project and edit to your likes:
 
  * Do the same steps above but for the SETUP BOX:
  * cd `<project_dir>/boxes/setupbox`
- * `vagrant up`
+ * `vagrant up` (Vagrant import the basebox we previously added)
  * `vagrant halt`
  * `vagrant package setupbox --output setupbox.box`
  * `vagrant box add setupbox setupbox.box`
