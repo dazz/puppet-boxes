@@ -56,7 +56,7 @@ The development box takes the STAGE BOX and sets up the system for development. 
 - git
   - git user setup (ssh agent forward)
   - git-core
-  - git flow
+  - [git flow](https://github.com/nvie/gitflow)
   - gitk
 
 
@@ -69,12 +69,28 @@ We need all the software for running tests and reporting
 - unit tests
 - functional tests
 
-
+HOWTO
+============
 To work with this setup you do the following:
 
-# clone project and edit to your likes.
+*To clarify*: I will not explain vagrant much or puppet or git or how your host operating system works.
+I will however explain how this virtualization box model works.
 
-Setup the BASE BOX
-# go with terminal into boxes/basebox and run the command 'vagrant up'
-# when it comes back with finished setting up the BASE BOX you stop the vm with 'vagrant halt'
-# run 'vagrant package basebox --output basebox' to export the vm
+1. install [vagrant](vagrantup.com)
+
+ * Linux: `sudo apt-get install vagrant`
+2. install [Virtualbox](https://www.virtualbox.org)
+ * Linux: `sudo apt-get install virtualbox`
+
+3. clone this project and edit to your likes
+ * `git clone git@github.com:dazz/puppet-boxes.git`
+
+4. install [git-flow (git branching model)](http://nvie.com/posts/a-successful-git-branching-model/)
+ * [initialize](http://yakiloo.com/getting-started-git-flow/)
+ * create a new feature/<branch_name> to start customizing to your likes to make a pull request later
+
+5. Setup the BASE BOX
+
+ * go with terminal into boxes/basebox and run the command 'vagrant up'
+ * when it comes back with finished setting up the BASE BOX you stop the vm with 'vagrant halt'
+ * run 'vagrant package basebox --output basebox.box' to export the vm
