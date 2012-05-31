@@ -17,6 +17,8 @@ exec {"apt-update":
 # ensure that 'apt-get update' is execute at least once before a package is downloaded
 Exec["apt-update"] -> Package <| |>
 
+# some modules of puppetlabs require a newer version of facter (1.6+), this is a workaround
+
 if ! $::osfamily {
   case $::operatingsystem {
     'RedHat', 'Fedora', 'CentOS', 'Scientific', 'SLC', 'Ascendos', 'CloudLinux', 'PSBM', 'OracleLinux', 'OVS', 'OEL': {
@@ -40,5 +42,4 @@ if ! $::osfamily {
 node default
 {
     include boxes::setupbox
-    include boxes::developmentbox
 }

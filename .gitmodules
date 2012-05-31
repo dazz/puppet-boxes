@@ -19,9 +19,6 @@
 [submodule "modules/sqlite3"]
 	path = modules/sqlite3
 	url = git://github.com/puppetlabs/puppetlabs-sqlite3.git
-[submodule "modules/php"]
-	path = modules/php
-	url = git://github.com/saz/puppet-php.git
 [submodule "modules/xdebug"]
 	path = modules/xdebug
 	url = git://github.com/stkoegel/puppet-xdebug.git
