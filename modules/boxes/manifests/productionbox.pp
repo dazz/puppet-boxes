@@ -1,0 +1,3 @@
+class boxes::productionbox {
+
+}
