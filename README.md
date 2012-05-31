@@ -5,22 +5,22 @@ Puppet and Vagrant Boxes building a development, testing and staging flow.
 
 The application development workflow will be supported by a setup of virtual machine "boxes". Each box will have its purpose and its predecessor in order to develop easily and fast for and in the web-stack (means web-applications, web- and mvc-frameworks, interfaces).
 
-### this document:
+### In this document:
 
-  * [Getting started](https://github.com/dazz/puppet-boxes#Getting_started)
-   * [Installation](https://github.com/dazz/puppet-boxes#Installation)
+* [Getting started](#Getting_started)
+   * [Installation](#Installation)
    * [Setup the BASE BOX](#Setup_the_BASE_BOX)
-   * [Setup the SETUP BOX](https://github.com/dazz/puppet-boxes#Setup_the_SETUP_BOX)
-  * [About: The box model](https://github.com/dazz/puppet-boxes#the_box_model)
-   * [BASE BOX](https://github.com/dazz/puppet-boxes#base-box)
-   * [SETUP BOX](https://github.com/dazz/puppet-boxes#setup-box)
-   * [PRODUCTION BOX](https://github.com/dazz/puppet-boxes#production-box)
-   * [STAGE BOX](https://github.com/dazz/puppet-boxes#stage-box)
-   * [DEVELOPMENT BOX](https://github.com/dazz/puppet-boxes#development-box)
-   * [TEST BOX](https://github.com/dazz/puppet-boxes#test-box)
-  * [Hints and tips](https://github.com/dazz/puppet-boxes#Hints-and-tips)
-  * [Future plans](https://github.com/dazz/puppet-boxes#Future_plans)
-  * [License](https://github.com/dazz/puppet-boxes#License)
+   * [Setup the SETUP BOX](#Setup_the_SETUP_BOX)
+* [About: The box model](#the_box_model)
+   * [BASE BOX](#base-box)
+   * [SETUP BOX](#setup-box)
+   * [PRODUCTION BOX](#production-box)
+   * [STAGE BOX](#stage-box)
+   * [DEVELOPMENT BOX](#development-box)
+   * [TEST BOX](#test-box)
+* [Hints and tips](#Hints-and-tips)
+* [Future plans](#Future_plans)
+* [License](#License)
 
 ## Getting started
 
