@@ -1,0 +1,4 @@
+class boxes::stagebox {
+
+
+}
