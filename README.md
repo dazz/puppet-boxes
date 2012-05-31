@@ -23,18 +23,18 @@ The setup box will take the BASE BOX, install all needed packages and setup user
 
 In this case:
 
-   - Apache2.2
-   - PHP 5.3 / 5.4
-   - MySQL (datastorage will go to its own vm, in v2)
+* Apache2.2
+* PHP 5.3 / 5.4
+* MySQL (datastorage will go to its own vm, in v2)
 
 ## PRODUCTION BOX
 
 The production box takes the SETUP BOX and installs the application and sets
 all the configuration to run it in production environment.
 
-   - Set users and rights for files and directories
-   - Create database user
-   - Deploy application (from git repo)
+* Set users and rights for files and directories
+* Create database user
+* Deploy application (from git repo)
 
 ## STAGE BOX
 
@@ -42,23 +42,23 @@ The staging box takes the PRODUCTION BOX and sets up a configuration for.
 If you have a symfony project this would represent your stage environment where you have everything setup
 like in your production environment, but with profiling and other tools to see what will be deployed.
 
-   - translations
-   - profiling
-   - stuff that management or production wants to do or to see before going life
+* translations
+* profiling
+* stuff that management or production wants to do or to see before going life
 
 ## DEVELOPMENT BOX
 
 The development box takes the stagebox and sets up the system for development. There will be a lot of tools needed.
 
-   - installing stuff: aptitude (I install stuff and put it then into this project after coding)
-   - text editing: vim
-   - debugging: xdebug
-   - shell: zShell, setup .bash_aliases
-   - git
-       - git user setup (ssh agent forward)
-       - git-core
-       - [git flow](https://github.com/nvie/gitflow)
-       - gitk
+* installing stuff: aptitude (I install stuff and put it then into this project after coding)
+* text editing: vim
+* debugging: xdebug
+* shell: zShell, setup .bash_aliases
+* git
+   * git user setup (ssh agent forward)
+   * git-core
+   * [git flow](https://github.com/nvie/gitflow)
+   * gitk
 
 
 ## TEST BOX
@@ -66,9 +66,9 @@ The development box takes the stagebox and sets up the system for development. T
 The test box is for running all the tests. The test box takes the PRODUCTION BOX
 We need all the software for running tests and reporting
 
-   - user acceptance tests
-   - unit tests
-   - functional tests
+* user acceptance tests
+* unit tests
+* functional tests
 
 # Getting started
 
@@ -81,27 +81,33 @@ I will however try to explain how this virtualization box model works.
 
 ### Pre-requisites
 
-   1. Install [vagrant](vagrantup.com)
+1. Install [vagrant](vagrantup.com)
 
-       * Linux: `sudo apt-get install vagrant`
+ * Linux: `sudo apt-get install vagrant`
 
-   1. Install [Virtualbox](https://www.virtualbox.org)
+1. Install [Virtualbox](https://www.virtualbox.org)
 
-       * Linux: `sudo apt-get install virtualbox`
+ * Linux: `sudo apt-get install virtualbox`
 
-   1. Clone $this project
+1. Clone $this project
 
-       * Clone this project and edit to your likes:
+Clone this project and edit to your likes:
 
-        >   `git clone git@github.com:dazz/puppet-boxes.git`
-        >   `git submodule init` (to load all submodules from .gitmodules) and
-        >   `git submodule update` (to get the [submodules][4] code from github)
+        git clone git@github.com:dazz/puppet-boxes.git`
+
+to load all submodules from .gitmodules
+
+        git submodule init
+
+to get the [submodules][4] code from github
+
+        git submodule update
 
 ### Versioning (Optional)
 
-   * install [git-flow (git branching model)](http://nvie.com/posts/a-successful-git-branching-model/)
-   * [initialize](http://yakiloo.com/getting-started-git-flow/)
-   * create a new feature/<branch_name> to start customizing to your likes to make a pull request later
+* install [git-flow (git branching model)](http://nvie.com/posts/a-successful-git-branching-model/)
+* [initialize](http://yakiloo.com/getting-started-git-flow/)
+* create a new feature/<branch_name> to start customizing to your likes to make a pull request later
 
 ## Setup the BASE BOX
 
@@ -158,9 +164,9 @@ Vagrant imports the basebox we previously added.
 
 Now we have the setupbox as base box for every iteration we want to do next:
 
-   * PRODUCTION BOX
-   * STAGE BOX and finally the
-   * DEVELOPER BOX
+* PRODUCTION BOX
+* STAGE BOX and finally the
+* DEVELOPER BOX
 
 In the first two stages we won't do anything by hand, but let machines to the work.
 How many iterations you will need to have a production close environment to develop in
