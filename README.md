@@ -1,61 +1,63 @@
 # puppet-boxes
 
 
-Puppet and Vagrant Boxes building a development, testing and staging flow
+Puppet and Vagrant Boxes building a development, testing and staging flow.
 
-The application development workflow will be supported by a setup of virtual
-machines "boxes". Each box will have its purpose and its predecessor in order to develop easily and fast
-for and in the web-stack (means web-applications, web- and mvc-frameworks, interfaces).
+The application development workflow will be supported by a setup of virtual machine "boxes". Each box will have its purpose and its predecessor in order to develop easily and fast for and in the web-stack (means web-applications, web- and mvc-frameworks, interfaces).
+
+### this document:
+
+  * [Getting started](https://github.com/dazz/puppet-boxes#Getting_started)
+   * [Installation](https://github.com/dazz/puppet-boxes#Installation)
+   * [Setup the BASE BOX](#Setup_the_BASE_BOX)
+   * [Setup the SETUP BOX](https://github.com/dazz/puppet-boxes#Setup_the_SETUP_BOX)
+  * [About: The box model](https://github.com/dazz/puppet-boxes#the_box_model)
+   * [BASE BOX](https://github.com/dazz/puppet-boxes#base-box)
+   * [SETUP BOX](https://github.com/dazz/puppet-boxes#setup-box)
+   * [PRODUCTION BOX](https://github.com/dazz/puppet-boxes#production-box)
+   * [STAGE BOX](https://github.com/dazz/puppet-boxes#stage-box)
+   * [DEVELOPMENT BOX](https://github.com/dazz/puppet-boxes#development-box)
+   * [TEST BOX](https://github.com/dazz/puppet-boxes#test-box)
+  * [Hints and tips](https://github.com/dazz/puppet-boxes#Hints-and-tips)
+  * [Future plans](https://github.com/dazz/puppet-boxes#Future_plans)
+  * [License](https://github.com/dazz/puppet-boxes#License)
 
 ## Getting started
 
 To work with this setup you do the following:
 
-**To clarify**: I will not explain vagrant much or puppet or git or do know how host operating systems work.
-I will however try to explain how this virtualization box model works.
+**To clarify**: I will not explain vagrant much or puppet or git or do know how host operating systems work. I will however try to explain how this virtualization box model works.
 
-## Installation
-
-### Pre-requisites
+## Installation Pre-requisites
 
 1. Install [vagrant](vagrantup.com)
-
- * Linux: `sudo apt-get install vagrant`
-
 1. Install [Virtualbox](https://www.virtualbox.org)
+1. Clone $this project and edit to your likes:
+1. Load all submodules from .gitmodules and get the [submodules][4] code from github
 
- * Linux: `sudo apt-get install virtualbox`
+Linux / Mac:
 
-1. Clone $this project
-
-Clone this project and edit to your likes:
-
-        git clone git@github.com:dazz/puppet-boxes.git`
-
-to load all submodules from .gitmodules
-
+        sudo apt-get install virtualbox
+        sudo apt-get install vagrant
+        git clone git@github.com:dazz/puppet-boxes.git
         git submodule init
-
-to get the [submodules][4] code from github
-
         git submodule update
 
 ### Versioning (Optional)
 
-* install [git-flow (git branching model)](http://nvie.com/posts/a-successful-git-branching-model/)
-* [initialize](http://yakiloo.com/getting-started-git-flow/)
-* create a new feature/<branch_name> to start customizing to your likes to make a pull request later
+* Install [git-flow (git branching model)](http://nvie.com/posts/a-successful-git-branching-model/)
+* [Initialize with git-flow](http://yakiloo.com/getting-started-git-flow/)
+* Create a new feature/<branch_name> to start customizing the project to your likes to make a pull request later.
 
 ## Setup the BASE BOX
 
 ### first start of vm with vagrant
 
-Go with terminal into `<project_dir>/boxes/basebox` and run the command
+Go with terminal into `<project_dir>/boxes/basebox` and run all the commands in this directory.
 
         vagrant up
 
-Vagrant will run with the Vagrantfile, download the box from the specified box_url and add it to vagrants boxes (see all with `vagrant box list`)
-Run the provisioner Puppet startting with the manifest.pp in the same directory (this is how we do it for every box)
+Vagrant will run with the Vagrantfile, download the box from the specified box_url and add it to vagrants boxes (see all with `vagrant box list`). Run the provisioner Puppet startting with the manifest.pp in the same directory (this is how we do it for every box).
 
 Vagrant will start a virtual machine in Virtualbox with
 
@@ -66,17 +68,17 @@ You can have a look with `vagrant ssh`(Linux and Mac) but don't touch anything y
 
 ### Packing the first box
 
+**Linux:** There is a bug that the VM 'remembers' the previously set mac-address of VM. So when you reuse or copy it, it still knows it's cpoied. See fix [here](https://github.com/dazz/puppet-boxes#networking).
+
 When the vagrant comes back with finished setting up the BASE BOX you stop the vm with
 
         vagrant halt
 
-Run following to export the vm as base box for the next iteration, the SETUP BOX
+Run following to package the vm as box. Vagrant will package the vm as a box and put it into the directory that xou are in.
 
-        mkdir -R ~/Development/puppet_boxes
         vagrant package basebox --output basebox.box
 
-*Tip:* (add `*.box` to your .gitignore)
-Vagrant will package the vm as a box
+**Tip:** (add `*.box` to your .gitignore)
 
 ### Adding first box as a base box
 
@@ -97,37 +99,15 @@ Vagrant imports the basebox we previously added.
         vagrant package setupbox --output setupbox.box
         vagrant box add setupbox setupbox.box
 
-# What is next
-
-Now we have the setupbox as base box for every iteration we want to do next:
-
-* PRODUCTION BOX
-* STAGE BOX and finally the
-* DEVELOPER BOX
-
-In the first two stages we won't do anything by hand, but let machines to the work.
-How many iterations you will need to have a production close environment to develop in
-depends on your usecase or the company you work for.
-
-# Hints and tips
-
-## Networking
-If you don't see your setupbox with 192.168.23.24 you manually have to delete the file where the mac-address is hardwired.
-So run in the vm:
-        sudo rm /etc/udev/rules.d/70-persistent-net.rules
-Then start virtualmachine if not already started and manualy restart the machine. The file we deleted will be fresh generated with the actual mac-address.
-Sources:[1][1], [2][2], [3][3]
 
 
-# The boxes
+# About: The box model
 
 ## BASE BOX
 
-The base box will download the first base box from puppetlabs or your chosen url.
-Everything that needs to be prepared before all the software will be setup will happen in this step.
+The base box will download the first base box from puppetlabs or your chosen url. Everything that needs to be prepared before all the software will be setup will happen in this step.
 
-You can set your own url here with `basebox.vm.box_url`, but make sure that you do not maintain this
-box to stay clear of your project scope. it ends here.
+You can set your own url here with `basebox.vm.box_url`, but make sure that you do not maintain this box to stay clear of your project scope. it ends here.
 
 ## SETUP BOX
 
@@ -141,8 +121,7 @@ In this case:
 
 ## PRODUCTION BOX
 
-The production box takes the SETUP BOX and installs the application and sets
-all the configuration to run it in production environment.
+The production box takes the SETUP BOX and installs the application and sets all the configuration to run it in production environment.
 
 * Set users and rights for files and directories
 * Create database user
@@ -150,9 +129,7 @@ all the configuration to run it in production environment.
 
 ## STAGE BOX
 
-The staging box takes the PRODUCTION BOX and sets up a configuration for.
-If you have a symfony project this would represent your stage environment where you have everything setup
-like in your production environment, but with profiling and other tools to see what will be deployed.
+The staging box takes the PRODUCTION BOX and sets up a configuration for. If you have a symfony project this would represent your stage environment where you have everything setup like in your production environment, but with profiling and other tools to see what will be deployed.
 
 * translations
 * profiling
@@ -175,14 +152,49 @@ The development box takes the stagebox and sets up the system for development. T
 
 ## TEST BOX
 
-The test box is for running all the tests. The test box takes the PRODUCTION BOX
-We need all the software for running tests and reporting
+The test box is for running all the tests. The test box takes the PRODUCTION BOX. We need all the software for running tests and reporting
 
 * user acceptance tests
 * unit tests
 * functional tests
 
 
+# Future plans
+
+Now we have the setupbox as base box for every iteration we want to do next:
+
+* PRODUCTION BOX
+* STAGE BOX and finally the
+* DEVELOPER BOX
+
+In the first two stages we won't do anything by hand, but let machines to the work. How many iterations you will need to have a production close environment to develop in depends on your usecase or the company you work for.
+
+# Hints and tips
+
+## Networking
+If you run Ubuntu as host and don't see your setupbox with 192.168.23.24 you manually have to delete the file where the mac-address is hardwired.
+So run in the vm:
+
+        sudo rm /etc/udev/rules.d/70-persistent-net.rules
+
+Then start virtualmachine if not already started and manualy restart the machine. The file we deleted will be fresh generated with the actual mac-address. Sources:[1][1], [2][2], [3][3]
+
+
+# License
+
+   Copyright 2012 Anne-Julia Scheuermann
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
 
 
 [1]: http://askubuntu.com/questions/9375/new-mac-address-now-i-have-no-network-access
