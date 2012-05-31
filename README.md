@@ -7,20 +7,20 @@ The application development workflow will be supported by a setup of virtual mac
 
 ### In this document:
 
-* [Getting started](#Getting_started)
-   * [Installation](#Installation)
-   * [Setup the BASE BOX](#Setup_the_BASE_BOX)
-   * [Setup the SETUP BOX](#Setup_the_SETUP_BOX)
-* [About: The box model](#the_box_model)
+* [Getting started](#getting-started)
+   * [Installation](#installation-pre-requisites)
+   * [Setup the BASE BOX](#setup-the-base-box)
+   * [Setup the SETUP BOX](#setup-the-setup-box)
+* [About: The box model](#about-the-box-model)
    * [BASE BOX](#base-box)
    * [SETUP BOX](#setup-box)
    * [PRODUCTION BOX](#production-box)
    * [STAGE BOX](#stage-box)
    * [DEVELOPMENT BOX](#development-box)
    * [TEST BOX](#test-box)
-* [Hints and tips](#Hints-and-tips)
-* [Future plans](#Future_plans)
-* [License](#License)
+* [Hints and tips](#hints-and-tips)
+* [Future plans](#future-plans)
+* [License](#license)
 
 ## Getting started
 
