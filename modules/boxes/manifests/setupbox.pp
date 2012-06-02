@@ -15,6 +15,6 @@ class boxes::setupbox {
     }
 
     notice("boxes::setupbox install mysql")
-    include mysql
+    include mysql::server
 
 }
