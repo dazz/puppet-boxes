@@ -1,12 +1,23 @@
 class boxes::developmentbox {
 
-    Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/", "/home/vagrant/.rvm/bin" ] }
+    Exec {
+      path => ['/usr/local/bin', '/opt/local/bin', '/usr/bin', '/usr/sbin', '/bin', '/sbin'],
+      logoutput => true,
+    }
 
-    # untested until comment removed
-    package {'developer_tools':
-        require => Package['mc', 'aptitude', 'vim'],
+    # the update
+    include apt::update
+
+    #Package [require => Exec['apt_update']]
+    Exec["apt_update"] -> Package <| |>
+
+    # put here your tools
+    $package_list = ['vim', 'aptitude', 'sudo', 'mc', 'screen']
+
+    package {$package_list:
         ensure => present
-     }
+    }
+
 
 #    php::module { 'xdebug':
 #        require => Apt::Sources_list['dotdeb-php53'],
