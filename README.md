@@ -68,7 +68,7 @@ You can have a look with `vagrant ssh`(Linux and Mac) but don't touch anything y
 
 ### Packing the first box
 
-**Linux:** There is a bug that the VM 'remembers' the previously set mac-address of VM. So when you reuse or copy it, it still knows it's cpoied. See fix [here](https://github.com/dazz/puppet-boxes#networking).
+**Linux:** There is a bug that the VM 'remembers' the previously set mac-address of VM. So when you reuse or copy it, it still knows it's copied. See fix [here](https://github.com/dazz/puppet-boxes#networking).
 
 When the vagrant comes back with finished setting up the BASE BOX you stop the vm with
 
@@ -177,7 +177,7 @@ So run in the vm:
 
         sudo rm /etc/udev/rules.d/70-persistent-net.rules
 
-Then start virtualmachine if not already started and manualy restart the machine. The file we deleted will be fresh generated with the actual mac-address. Sources:[1][1], [2][2], [3][3]
+Then stop and start the vm manually with virtualmachine. The deleted file will be fresh generated with the actual mac-address. Sources:[1][1], [2][2], [3][3]
 
 
 # License
