@@ -6,6 +6,8 @@ class boxes::developmentbox {
     #Package [require => Exec['apt_update']]
     Exec["apt_update"] -> Package <| |>
 
+    # your stuff here
+
     # put here your tools
     $package_list = ['vim', 'aptitude', 'sudo', 'mc', 'screen']
 
