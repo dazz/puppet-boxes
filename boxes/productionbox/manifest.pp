@@ -41,5 +41,5 @@ if ! $::osfamily {
 
 node default
 {
-    include boxes::setupbox
+    include boxes::productionbox
 }
