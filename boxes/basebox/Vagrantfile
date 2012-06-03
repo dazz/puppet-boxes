@@ -10,7 +10,7 @@ Vagrant::Config.run do |config|
     basebox.package.name = "basebox"
 
     # base_box of our BASE BOX
-    basebox.vm.box = "debian_squeeze_32"
+    basebox.vm.box = "squeeze64"
 
     # you can set your own url here, but make sure that you do not maintain this box to stay
     # clear of your project scope. it ends here.
