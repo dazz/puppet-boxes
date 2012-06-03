@@ -18,7 +18,7 @@ Vagrant::Config.run do |config|
     basebox.vm.box_url = "http://puppetlabs.s3.amazonaws.com/pub/squeeze64.box"
 
     # left it here for dev purpose, don't need it really
-    basebox.vm.boot_mode = :gui
+    # basebox.vm.boot_mode = :gui
 
     # basebox.vm.forward_port 80, 8080
     # basebox.vm.share_folder "v-data", "/vagrant_data", "../data"
