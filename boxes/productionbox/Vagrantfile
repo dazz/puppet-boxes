@@ -8,7 +8,7 @@ Vagrant::Config.run do |config|
     # on which base box this box will be setup from
     productionbox.vm.box = "setupbox"
 
-    productionbox.vm.boot_mode = :gui
+    # productionbox.vm.boot_mode = :gui
 
     # productionbox.vm.forward_port 80, 8080
     # productionbox.vm.share_folder "v-data", "/vagrant_data", "../data"
