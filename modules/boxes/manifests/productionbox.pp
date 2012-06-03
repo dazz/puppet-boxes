@@ -1,4 +1,4 @@
-class boxes::developmentbox {
+class boxes::productionbox {
 
     # the update
     Exec { path => ['/usr/local/bin', '/opt/local/bin', '/usr/bin', '/usr/sbin', '/bin', '/sbin'], logoutput => true }
@@ -7,11 +7,4 @@ class boxes::developmentbox {
     Exec["apt_update"] -> Package <| |>
 
     # your stuff here
-
-    # put here your tools
-    $package_list = ['vim', 'aptitude', 'sudo', 'mc', 'screen']
-
-    package {$package_list:
-        ensure => present
-    }
 }

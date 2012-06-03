@@ -1,20 +1,32 @@
 class boxes::setupbox {
 
-    notice("boxes::setupbox install php and apache2")
-    include php::apache2
+    # the update
+    Exec { path => ['/usr/local/bin', '/opt/local/bin', '/usr/bin', '/usr/sbin', '/bin', '/sbin'], logoutput => true }
+    include apt::update
+    #Package [require => Exec['apt_update']]
+    Exec["apt_update"] -> Package <| |>
 
-#    php::module { [ 'suhosin', ]:
-#        require => Apt::Sources_list['dotdeb-php53'],
-#        notify  => Service[$php::params::apache_service_name],
-#        source  => true,
-#    }
+    # your stuff here
 
-    package{"php5-intl":
-        require => Class['php::install'],
-        notify  => Service[$php::params::apache_service_name]
+    # notice("boxes::setupbox install apache and php")
+    # apache::php
+
+    # install additional php packages
+    # package{ ["php5-intl","php5-mysql","phpunit"]:
+    #    ensure => "installed",
+    #    require => Class["apache::php"],
     }
 
-    notice("boxes::setupbox install mysql")
-    include mysql
+    # TODO: include augeas module
+    # installs augtool
+    # include augeas
+
+    # add user vagrant to group www-data
+    # user { "vagrant":
+    #     groups => "www-data",
+    # }
+
+    # notice("boxes::setupbox install mysql")
+    # include mysql::server
 
 }

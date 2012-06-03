@@ -1,5 +1,4 @@
-class boxes::developmentbox {
-
+class boxes::testbox {
     # the update
     Exec { path => ['/usr/local/bin', '/opt/local/bin', '/usr/bin', '/usr/sbin', '/bin', '/sbin'], logoutput => true }
     include apt::update
@@ -8,10 +7,4 @@ class boxes::developmentbox {
 
     # your stuff here
 
-    # put here your tools
-    $package_list = ['vim', 'aptitude', 'sudo', 'mc', 'screen']
-
-    package {$package_list:
-        ensure => present
-    }
 }
