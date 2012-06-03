@@ -1,20 +1,20 @@
 class boxes::developmentbox {
 
-    # install xdebug
-    include xdebug
-
-    # install sqlite
-    include sqlite
-
-    # install phpunit
-    package{ ["phpunit"]:
-        ensure => "installed",
-        require => Class["apache::php"],
+    Exec {
+      path => ['/usr/local/bin', '/opt/local/bin', '/usr/bin', '/usr/sbin', '/bin', '/sbin'],
+      logoutput => true,
     }
 
-    # untested until comment removed
-    package {'developer_tools':
-        require => Package['mc', 'aptitude', 'vim'],
+    # the update
+    include apt::update
+
+    #Package [require => Exec['apt_update']]
+    Exec["apt_update"] -> Package <| |>
+
+    # put here your tools
+    $package_list = ['vim', 'aptitude', 'sudo', 'mc', 'screen']
+
+    package {$package_list:
         ensure => present
-     }
+    }
 }

@@ -14,8 +14,8 @@ Vagrant::Config.run do |config|
 
     # you can set your own url here, but make sure that you do not maintain this box to stay
     # clear of your project scope. it ends here.
-    basebox.vm.box_url = "http://mathie-vagrant-boxes.s3.amazonaws.com/debian_squeeze_32.box"
-    # basebox.vm.box_url = "http://puppetlabs.s3.amazonaws.com/pub/squeeze64.box"
+    # basebox.vm.box_url = "http://mathie-vagrant-boxes.s3.amazonaws.com/debian_squeeze_32.box"
+    basebox.vm.box_url = "http://puppetlabs.s3.amazonaws.com/pub/squeeze64.box"
 
     # left it here for dev purpose, don't need it really
     basebox.vm.boot_mode = :gui

@@ -3,8 +3,11 @@ class boxes::setupbox {
     notice("boxes::setupbox install apache and php")
     apache::php
 
-    notice("boxes::setupbox install mysql")
-    include mysql::server
+    # install additional php packages
+    package{ ["php5-intl","php5-mysql","phpunit"]:
+        ensure => "installed",
+        require => Class["apache::php"],
+    }
 
     # TODO: include augeas module
     # installs augtool
@@ -15,10 +18,7 @@ class boxes::setupbox {
         groups => "www-data",
     }
 
-    # install additional php packages
-    package{ ["php5-intl","php5-mysql","phpunit"]:
-        ensure => "installed",
-        require => Class["apache::php"],
-    }
+    notice("boxes::setupbox install mysql")
+    include mysql::server
 
 }
