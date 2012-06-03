@@ -6,10 +6,14 @@ class boxes::basebox {
   #Package [require => Exec['apt_update']]
   Exec["apt_update"] -> Package <| |>
 
-  # your basebox packages here
-  $package_list = ['vim', 'aptitude', 'sudo', 'mc']
+  # fix udev
+  exec { "fix_udev_rules":
+    command => "rm -f /etc/udev/rules.d/70-persistent-net.rules"
+  }
 
-  package {$package_list: }
+  exec { "fix_udev_generator":
+    command => "rm -f /lib/udev/rules.d/75-persistent-net-generator.rules"
+  }
 
   # your stuff here
 }

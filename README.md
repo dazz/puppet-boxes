@@ -172,12 +172,10 @@ In the first two stages we won't do anything by hand, but let machines to the wo
 # Hints and tips
 
 ## Networking
-If you run Ubuntu as host and don't see your setupbox with 192.168.23.24 you manually have to delete the file where the mac-address is hardwired.
-So run in the vm:
 
-        sudo rm /etc/udev/rules.d/70-persistent-net.rules
-
-Then stop and start the vm manually with virtualmachine. The deleted file will be fresh generated with the actual mac-address. Sources:[1][1], [2][2], [3][3]
+### [udev][5]
+There is a problem with machines of the Debian osfamily with writing the mac-address.
+Fixed this with the basebox with deleting the generated and its generator file.
 
 
 # License
@@ -201,3 +199,4 @@ Then stop and start the vm manually with virtualmachine. The deleted file will b
 [2]: http://www.artwork.com/support/linux/eth0_configuration.htm
 [3]: http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=1032790
 [4]: http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/
+[5]: http://www.ducea.com/2008/09/01/remove-debian-udev-persistent-net-rules/

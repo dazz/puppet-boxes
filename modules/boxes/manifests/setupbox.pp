@@ -15,7 +15,7 @@ class boxes::setupbox {
     # package{ ["php5-intl","php5-mysql","phpunit"]:
     #    ensure => "installed",
     #    require => Class["apache::php"],
-    }
+    # }
 
     # TODO: include augeas module
     # installs augtool
