@@ -28,3 +28,6 @@
 [submodule "modules/webdev"]
 	path = modules/webdev
 	url = git@github.com:dazz/puppet-webdev.git
+[submodule "modules/augeas"]
+	path = modules/augeas
+	url = https://github.com/camptocamp/puppet-augeas.git
