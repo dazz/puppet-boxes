@@ -9,33 +9,33 @@ boxes_build() {
   for box in ${boxes[@]}
   do
     pushd boxes/$box >/dev/null
-    echo "
-    [$box] vagrant status"
+    echo "[$box] vagrant status"
     vagrant status
-    echo "
-    [$box] vagrant up"
+
+    echo "[$box] vagrant up"
     vagrant up
-    echo "
-    [$box] vagrant status"
+
+    echo "[$box] vagrant status"
     vagrant status
-    echo "
-    [$box] vagrant halt"
+
+    echo "[$box] vagrant halt"
     vagrant halt
-    echo "
-    [$box] vagrant status"
+
+    echo "[$box] vagrant status"
     vagrant status
-    echo "
-    [$box] vagrant package $box --output $box.box"
+
+    echo "[$box] vagrant package $box --output $box.box"
     vagrant package $box --output $box.box
-    echo "
-    [$box] vagrant box add $box $box.box"
+
+    echo "[$box] vagrant box add $box $box.box"
     vagrant box add $box $box.box
-    echo "
-    [$box] finish: all boxes build for happy developers"
+
+    echo "[$box] finish building box"
 
     popd >/dev/null
     # other stuff on $name
   done
+  echo "[boxes] finish: all boxes build for happy developers :)"
 }
 
 boxes_status() {
@@ -79,4 +79,4 @@ boxes_start() {
 boxes_status
 #boxes_destroy
 #boxes_start setupbox
-boxes_build
+#boxes_build
