@@ -39,7 +39,7 @@ Linux / Mac:
 
         sudo apt-get install virtualbox
         sudo apt-get install vagrant
-        git clone git@github.com:dazz/puppet-boxes.git
+        git clone git://github.com/dazz/puppet-boxes.git
         git submodule init
         git submodule update
 
