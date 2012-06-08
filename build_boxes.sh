@@ -9,6 +9,85 @@ boxes_list() {
   echo "boxes: ${boxes[@]}"
 }
 
+box_start() {
+  box="$1"
+  pushd boxes/$box >/dev/null
+    vagrant up
+  popd >/dev/null
+}
+
+box_status() {
+
+  box="$1"
+
+  pushd boxes/$box >/dev/null
+
+  echo "[$box] vagrant status"
+  vagrant status
+
+  popd >/dev/null
+}
+
+boxes_status() {
+  for box in ${boxes[@]}; do
+    box_status $box
+  done
+}
+
+box_destroy() {
+  box="$1"
+  pushd boxes/$box >/dev/null
+    vagrant destroy -f
+  popd >/dev/null
+}
+
+boxes_destroy() {
+  for box in ${boxes[@]}; do
+    box_destroy $box
+  done
+}
+
+box_stop() {
+  box="$1"
+  pushd boxes/$box >/dev/null
+    vagrant halt
+  popd >/dev/null
+}
+
+
+boxes_stop() {
+  for box in ${boxes[@]}; do
+    box_stop $box
+  done
+}
+
+box_base_destroy() {
+  box="$1"
+  pushd boxes/$box >/dev/null
+    vagrant box remove $box
+  popd >/dev/null
+}
+
+boxes_base_destroy() {
+  for box in ${boxes[@]}; do
+    box_base_destroy $box
+  done
+}
+
+box_package() {
+  box="$1"
+  pushd boxes/$box >/dev/null
+    vagrant package $box --output $box.box
+  popd >/dev/null
+}
+
+box_add() {
+  box="$1"
+  pushd boxes/$box >/dev/null
+    vagrant box add $box $box.box
+  popd >/dev/null
+}
+
 box_build() {
   if [ -z "$1" ]; then
     echo "Please chose one of them: "
@@ -37,26 +116,19 @@ box_build() {
 
   pushd boxes/$box >/dev/null
 
-    echo "$echo_this vagrant status"
-    #vagrant status
+    box_status $box
 
-    echo "$echo_this vagrant up"
-    #vagrant up
+    box_start $box
 
-    echo "$echo_this vagrant status"
-    #vagrant status
+    box_stop $box
 
-    echo "$echo_this vagrant halt"
-    #vagrant halt
+    rm $box.box
 
-    echo "$echo_this vagrant status"
-    #vagrant status
+    box_package $box
 
-    echo "$echo_this vagrant package $box --output $box.box"
-    #vagrant package $box --output $box.box
+    box_base_destroy $box
 
-    echo "$echo_this vagrant box add $box $box.box"
-    #vagrant box add $box $box.box
+    box_add $box
 
   popd >/dev/null
 
@@ -72,55 +144,7 @@ boxes_build() {
   echo "[boxes_build] finish: all boxes build for happy developers"
 }
 
-box_start() {
-  box="$1"
-  pushd boxes/$box >/dev/null
-    vagrant up
-  popd >/dev/null
-}
-
-
-boxes_status() {
-  for box in ${boxes[@]}; do
-    pushd boxes/$box >/dev/null
-
-    echo "[$box] vagrant status"
-    vagrant status
-
-    popd >/dev/null
-    # other stuff on $name
-  done
-}
-
-boxes_destroy() {
-  for box in ${boxes[@]}; do
-    pushd boxes/$box >/dev/null
-
-    echo "[$box] vagrant destroy -f"
-    vagrant status
-    vagrant destroy -f
-
-    popd >/dev/null
-    # other stuff on $name
-  done
-}
-
-boxes_start() {
-  if [ -n $1 ]; then
-    echo "pushd boxes/$1 >/dev/null"
-    echo "vagrant up"
-    echo "popd >/dev/null"
-  else
-    echo "Please chose one of them: $boxes"
-  fi
-
-}
-
-start2() {
-  if [ ! -n "$1" ]; then
-    echo "Please specify what you want to do."
-    exit
-  fi
+start() {
 
   case "$1" in
   'box')
@@ -137,102 +161,85 @@ start2() {
     'delete')
       box_delete $3
       ;;
-    'destroy')
-      box_destroy $3
-      ;;
     'status')
       box_status $3
       ;;
+    'base')
+      case "$3" in
+      'destroy')
+        box_base_destroy $4
+        ;;
+      *)
+        echo "Usage: box base <option>
+Options:
+  - destroy    destroy base (must be added previously)
+"
+        ;;
+      esac
+      ;;
     *)
+      echo "Usage: box <option>
+Options:
+  - build    build a box
+  - start    start a box
+  - stop     halt a box
+  - delete   delete created box
+  - status   show status of box
+  - base     .. more options here
+"
       ;;
     esac
     ;;
   'boxes')
     case "$2" in
-      'build')
-        boxes_build
-        ;;
-      'stop')
-        boxes_stop
-        ;;
+    'build')
+      boxes_build
+      ;;
+    'stop')
+      boxes_stop
+      ;;
+    'destroy')
+      boxes_destroy
+      ;;
+    'status')
+      boxes_status
+      ;;
+    'base')
+      case "$3" in
       'destroy')
-        boxes_destroy
+        boxes_base_destroy
         ;;
       *)
         ;;
       esac
-    ;;
-  'base')
-    case "$2" in
-    'delete')
-      base_delete $3
       ;;
     *)
+    echo "Usage: boxes <option>
+Options:
+  - build    build all boxes
+  - stop     halt all boxes
+  - destroy  destroy all boxes
+  - status   show status of all boxes
+  - base     .. more options here
+"
       ;;
     esac
     ;;
   *)
+    echo "Usage: <option>
+Options:
+  - box
+  - boxes
+"
     ;;
   esac
 }
 
 
-
-
-start() {
-
- if [ ! -n "$1" ]; then
-    echo "Please specify what you want to do."
-    exit
- fi
-
- case "$1" in
-
- 'build')
-    #echo "Would call boxes_build"
-
-    case "$2" in
-    'box')
-
-      if [ ! -n "$3" ]; then
-        echo "Usage: build box <boxname>"
-        boxes_list
-        exit
-      fi
-
-      echo "Building box $3"
-
-      box_build $3
-
-      ;;
-    'boxes')
-      echo "Would build all boxes"
-      boxes_build
-      ;;
-    *)
-      echo "Please specify what you want to build."
-      ;;
-    esac
-    ;;
- 'start')
-    echo "Would call boxes_start"
-    case "$2" in
-        'box')
-          echo "Start box"
-          ;;
-    ;;
- 'destroy')
-    echo "Would call boxes_destroy"
-    ;;
- *)
-    echo "Nothing to do here!"
-    ;;
- esac
-}
-
 echo "\$1: $1"
 echo "\$2: $2"
 echo "\$3: $3"
+echo "\$4: $4"
 
 start $@
 #boxes_status
