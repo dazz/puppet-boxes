@@ -22,13 +22,14 @@ box_build() {
   # set $box
   for check_box in ${boxes[@]}; do
     if [ "$1" = "$check_box" ]; then
-      echo "Checking box $check_box"
-      ${box} = "$check_box"
+      echo "Checking that box $check_box exists"
+      box=$check_box
     fi
   done
 
   if [ ! -n "${box}" ]; then
     echo "The box you chose '$1' is not existing. Please edit enabled boxes or check that the box you want to build exists"
+    boxes_list
     exit
   fi
 
@@ -71,6 +72,14 @@ boxes_build() {
   echo "[boxes_build] finish: all boxes build for happy developers"
 }
 
+box_start() {
+  box="$1"
+  pushd boxes/$box >/dev/null
+    vagrant up
+  popd >/dev/null
+}
+
+
 boxes_status() {
   for box in ${boxes[@]}; do
     pushd boxes/$box >/dev/null
@@ -107,6 +116,69 @@ boxes_start() {
 
 }
 
+start2() {
+  if [ ! -n "$1" ]; then
+    echo "Please specify what you want to do."
+    exit
+  fi
+
+  case "$1" in
+  'box')
+    case "$2" in
+    'build')
+      box_build $3
+      ;;
+    'start')
+      box_start $3
+      ;;
+    'stop')
+      box_stop $3
+      ;;
+    'delete')
+      box_delete $3
+      ;;
+    'destroy')
+      box_destroy $3
+      ;;
+    'status')
+      box_status $3
+      ;;
+    *)
+      ;;
+    esac
+    ;;
+  'boxes')
+    case "$2" in
+      'build')
+        boxes_build
+        ;;
+      'stop')
+        boxes_stop
+        ;;
+      'destroy')
+        boxes_destroy
+        ;;
+      *)
+        ;;
+      esac
+    ;;
+  'base')
+    case "$2" in
+    'delete')
+      base_delete $3
+      ;;
+    *)
+      ;;
+    esac
+    ;;
+  *)
+    ;;
+  esac
+}
+
+
+
+
 start() {
 
  if [ ! -n "$1" ]; then
@@ -135,6 +207,7 @@ start() {
       ;;
     'boxes')
       echo "Would build all boxes"
+      boxes_build
       ;;
     *)
       echo "Please specify what you want to build."
@@ -143,6 +216,10 @@ start() {
     ;;
  'start')
     echo "Would call boxes_start"
+    case "$2" in
+        'box')
+          echo "Start box"
+          ;;
     ;;
  'destroy')
     echo "Would call boxes_destroy"
