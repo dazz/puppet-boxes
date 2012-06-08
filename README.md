@@ -39,7 +39,7 @@ Linux / Mac:
 
         sudo apt-get install virtualbox
         sudo apt-get install vagrant
-        git clone git@github.com:dazz/puppet-boxes.git
+        git clone git://github.com/dazz/puppet-boxes.git
         git submodule init
         git submodule update
 
@@ -49,7 +49,23 @@ Linux / Mac:
 * [Initialize with git-flow](http://yakiloo.com/getting-started-git-flow/)
 * Create a new feature/<branch_name> to start customizing the project to your likes to make a pull request later.
 
-## Setup the BASE BOX
+### Adding new puppet modules to the project
+
+        git submodule add <repo> modules/<modulename>
+
+To see all modules:
+
+        git submodule status
+
+## Setup the boxes with build_boxes.sh
+
+Go with terminal into `<project_dir>` and run
+
+        ./build_boxes boxes build
+
+Thats it.
+
+## Setup the boxes manually (with the first box as example)
 
 ### first start of vm with vagrant
 
@@ -84,22 +100,7 @@ Run following to package the vm as box. Vagrant will package the vm as a box and
 
         vagrant box add basebox basebox.box
 
-We add it to the other vagrant boxes so we can reference it as base in another Vagrantfile. If you have a look in `~/.vagrant.d/boxes/` there should now be the basebox folder with your previous packed box
-
-## Setup the SETUP BOX
-
-Do the same steps above but for the SETUP BOX:
-
-        cd <project_dir>/boxes/setupbox
-        vagrant up
-
-Vagrant imports the basebox we previously added.
-
-        vagrant halt
-        vagrant package setupbox --output setupbox.box
-        vagrant box add setupbox setupbox.box
-
-
+We add it to the other vagrant boxes so we can reference it as base in another Vagrantfile. If you have a look in `~/.vagrant.d/boxes/` there should now be the basebox folder with your previous packed box.
 
 # About: The box model
 
