@@ -1,22 +1,38 @@
 #! /bin/bash
 
 boxes=(basebox setupbox)
-# productionbox stagebox developmentbox testbox)
+# productionbox stagebox developmentbox developmentbox testbox)
 
 # set VAGRANT_LOG=DEBUG
 
 boxes_list() {
   echo "boxes: ${boxes[@]}"
+  echo "To edit the list of boxes, please see line 3 in this file"
 }
 
 box_start() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box start <box>"
+    boxes_list
+    exit
+  fi
+
   box="$1"
+  echo_this="[box_start][$box]"
+
+  echo "$echo_this vagrant up"
+
   pushd boxes/$box >/dev/null
     vagrant up
   popd >/dev/null
 }
 
 box_status() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box status <box>"
+    boxes_list
+    exit
+  fi
 
   box="$1"
 
@@ -35,6 +51,12 @@ boxes_status() {
 }
 
 box_destroy() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box destroy <box>"
+    boxes_list
+    exit
+  fi
+
   box="$1"
   pushd boxes/$box >/dev/null
     vagrant destroy -f
@@ -48,6 +70,12 @@ boxes_destroy() {
 }
 
 box_stop() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box stop <box>"
+    boxes_list
+    exit
+  fi
+
   box="$1"
   pushd boxes/$box >/dev/null
     vagrant halt
@@ -61,20 +89,36 @@ boxes_stop() {
   done
 }
 
-box_base_destroy() {
+box_base_remove() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box base remove <box>"
+    boxes_list
+    exit
+  fi
+
   box="$1"
   pushd boxes/$box >/dev/null
     vagrant box remove $box
   popd >/dev/null
 }
 
-boxes_base_destroy() {
+boxes_base_remove() {
   for box in ${boxes[@]}; do
-    box_base_destroy $box
+    box_base_remove $box
   done
 }
 
+boxes_base_list() {
+  vagrant box list
+}
+
 box_package() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box package <box>"
+    boxes_list
+    exit
+  fi
+
   box="$1"
   pushd boxes/$box >/dev/null
     vagrant package $box --output $box.box
@@ -82,72 +126,86 @@ box_package() {
 }
 
 box_add() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box add <box>"
+    boxes_list
+    exit
+  fi
+
   box="$1"
   pushd boxes/$box >/dev/null
     vagrant box add $box $box.box
   popd >/dev/null
 }
 
-box_build() {
-  if [ -z "$1" ]; then
-    echo "Please chose one of them: "
+box_remove_pack() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box remove_pack <box>"
     boxes_list
     exit
-  else
-    echo "Starting to build box $1"
   fi
+
+  box="$1"
+  pushd boxes/$box >/dev/null
+    rm -f $box.box
+  popd >/dev/null
+}
+
+box_build() {
+  if [ ! -n "$1" ]; then
+    echo "Usage: box build <box>"
+    boxes_list
+    exit
+  fi
+
+  echo_this="[box_build][$1]"
+
 
   box=""
   # set $box
   for check_box in ${boxes[@]}; do
     if [ "$1" = "$check_box" ]; then
-      echo "Checking that box $check_box exists"
+      echo "$echo_this Checking that box $check_box exists in list"
       box=$check_box
     fi
   done
 
   if [ ! -n "${box}" ]; then
-    echo "The box you chose '$1' is not existing. Please edit enabled boxes or check that the box you want to build exists"
+    echo "$echo_this The box you chose '$1' is not existing. Please edit enabled boxes or check that the box you want to build exists"
     boxes_list
     exit
   fi
 
-  echo_this="[box_build][$box]"
+  box_status $box
 
-  pushd boxes/$box >/dev/null
+  box_destroy $box
 
-    box_status $box
+  box_base_remove $box
 
-    box_start $box
+  box_start $box
 
-    box_stop $box
+  box_stop $box
 
-    rm $box.box
+  box_remove_pack $box
 
-    box_package $box
+  box_package $box
 
-    box_base_destroy $box
-
-    box_add $box
-
-  popd >/dev/null
+  box_add $box
 
 }
 
 boxes_build() {
-  echo "[boxes_build] start: building boxes"
+
   for box in ${boxes[@]}; do
-
     box_build $box
-
   done
-  echo "[boxes_build] finish: all boxes build for happy developers"
 }
 
 start() {
 
   case "$1" in
   'box')
+
     case "$2" in
     'build')
       box_build $3
@@ -158,21 +216,24 @@ start() {
     'stop')
       box_stop $3
       ;;
-    'delete')
-      box_delete $3
+    'destroy')
+      box_destroy $3
+      ;;
+    'remove_pack')
+      box_remove_pack $3
       ;;
     'status')
       box_status $3
       ;;
     'base')
       case "$3" in
-      'destroy')
+      'remove')
         box_base_destroy $4
         ;;
       *)
         echo "Usage: box base <option>
 Options:
-  - destroy    destroy base (must be added previously)
+  - remove    remove box from list of added boxes
 "
         ;;
       esac
@@ -180,12 +241,13 @@ Options:
     *)
       echo "Usage: box <option>
 Options:
-  - build    build a box
-  - start    start a box
-  - stop     halt a box
-  - delete   delete created box
-  - status   show status of box
-  - base     .. more options here
+  - build <box>         build a box
+  - start <box>         start a box
+  - stop <box>          halt a box
+  - destroy <box>       destroy created box
+  - remove_pack <box>   removes packed file
+  - status <box>        show status of box
+  - base                .. more options here
 "
       ;;
     esac
@@ -204,12 +266,21 @@ Options:
     'status')
       boxes_status
       ;;
+    'list')
+      boxes_list
+      ;;
     'base')
       case "$3" in
-      'destroy')
-        boxes_base_destroy
+      'remove')
+        boxes_base_remove
+        ;;
+      'list')
+        boxes_base_list
         ;;
       *)
+        echo "Usage: boxes base <option>"
+  - remove   remove all added boxes
+  - list     list all added boxes
         ;;
       esac
       ;;
@@ -220,6 +291,7 @@ Options:
   - stop     halt all boxes
   - destroy  destroy all boxes
   - status   show status of all boxes
+  - list     list all enabled boxes
   - base     .. more options here
 "
       ;;
